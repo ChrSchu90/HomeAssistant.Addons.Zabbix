@@ -38,8 +38,7 @@ jobs:
           --test \
           --no-cache \
           --amd64 \
-          --target "zabbix-agent2-6.0" \
-          --docker-hub ${{ secrets.DOCKERHUB_USERNAME }}
+          --target "zabbix-agent2-6.0"
     
     - name: build zabbix-agent2-7.0
       uses: home-assistant/builder@2024.03.5
@@ -48,5 +47,4 @@ jobs:
           --test \
           --no-cache \
           --amd64 \
-          --target "zabbix-agent2-7.0" \
-          --docker-hub ${{ secrets.DOCKERHUB_USERNAME }}
+          --target "zabbix-agent2-7.0"
