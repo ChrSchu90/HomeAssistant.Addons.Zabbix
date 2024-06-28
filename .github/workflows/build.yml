@@ -32,7 +32,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
     - name: build zabbix-agent2-6.0
-      uses: home-assistant/builder@2024.03.0
+      uses: home-assistant/builder@2024.03.5
       with:
         args: |
           --test \
@@ -40,7 +40,7 @@ jobs:
           --target "zabbix-agent2-6.0"
     
     - name: build zabbix-agent2-7.0
-      uses: home-assistant/builder@2024.03.0
+      uses: home-assistant/builder@2024.03.5
       with:
         args: |
           --test \
