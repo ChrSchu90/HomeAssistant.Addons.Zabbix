@@ -38,8 +38,7 @@ jobs:
         args: |
           --test \
           --all \
-          --target ./zabbix-agent2-6.0 \
-          --docker-hub user-name-or-space-name
+          --target ./zabbix-agent2-6.0
     
     - name: build zabbix-agent2-7.0
       uses: home-assistant/builder@2024.03.0
@@ -47,5 +46,4 @@ jobs:
         args: |
           --test \
           --all \
-          --target ./zabbix-agent2-7.0 \
-          --docker-hub user-name-or-space-name
+          --target ./zabbix-agent2-7.0
