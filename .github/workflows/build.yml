@@ -38,6 +38,7 @@ jobs:
           --all \
           --test \
           --no-cache \
+          --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --image ha_zabbixagent2-6.0 \
           --target zabbix-agent2-6.0
     
@@ -48,5 +49,6 @@ jobs:
           --all \
           --test \
           --no-cache \
+          --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --image ha_zabbixagent2-7.0 \
           --target zabbix-agent2-7.0
