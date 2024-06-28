@@ -23,6 +23,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    - name: Login Docker Hub
+      uses: docker/login-action@v2.0.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     
     - name: build zabbix-agent2-6.0
       uses: home-assistant/builder@2024.03.0
@@ -30,7 +36,8 @@ jobs:
         args: |
           --test \
           --all \
-          --target zabbix-agent2-6.0
+          --target zabbix-agent2-6.0 \
+          --docker-hub user-name-or-space-name
     
     - name: build zabbix-agent2-7.0
       uses: home-assistant/builder@2024.03.0
@@ -38,4 +45,5 @@ jobs:
         args: |
           --test \
           --all \
-          --target zabbix-agent2-7.0
+          --target zabbix-agent2-7.0 \
+          --docker-hub user-name-or-space-name
