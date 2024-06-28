@@ -38,7 +38,7 @@ jobs:
           --all \
           --test \
           --no-cache \
-          --image ha_zabbixagent2-6.0:test \
+          --image ha_zabbixagent2-6.0 \
           --target zabbix-agent2-6.0
     
     - name: build zabbix-agent2-7.0
@@ -48,5 +48,5 @@ jobs:
           --all \
           --test \
           --no-cache \
-          --image ha_zabbixagent2-7.0:test \
+          --image ha_zabbixagent2-7.0 \
           --target zabbix-agent2-7.0
