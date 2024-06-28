@@ -38,7 +38,7 @@ jobs:
         args: |
           --test \
           --all \
-          --target zabbix-agent2-6.0 \
+          --target ./zabbix-agent2-6.0 \
           --docker-hub user-name-or-space-name
     
     - name: build zabbix-agent2-7.0
@@ -47,5 +47,5 @@ jobs:
         args: |
           --test \
           --all \
-          --target zabbix-agent2-7.0 \
+          --target ./zabbix-agent2-7.0 \
           --docker-hub user-name-or-space-name
