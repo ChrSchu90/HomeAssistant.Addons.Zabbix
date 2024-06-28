@@ -36,6 +36,8 @@ jobs:
       with:
         args: |
           --test \
+          --release-tag test \
+          --no-cache \
           --amd64 \
           --target "zabbix-agent2-6.0" \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }}
@@ -45,6 +47,8 @@ jobs:
       with:
         args: |
           --test \
+          --release-tag test \
+          --no-cache \
           --amd64 \
           --target "zabbix-agent2-7.0"
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }}
