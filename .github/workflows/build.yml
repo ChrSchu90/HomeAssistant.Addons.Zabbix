@@ -13,6 +13,11 @@ on:
     branches:
       - 'main'
 
+permissions:
+  contents: read
+  packages: read
+  id-token: write
+
 jobs:
   build:
     name: Build
