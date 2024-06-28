@@ -37,13 +37,13 @@ jobs:
       with:
         args: |
           --test \
-          --all \
-          --target ./zabbix-agent2-6.0
+          --amd64 \
+          --target "zabbix-agent2-6.0"
     
     - name: build zabbix-agent2-7.0
       uses: home-assistant/builder@2024.03.0
       with:
         args: |
           --test \
-          --all \
-          --target ./zabbix-agent2-7.0
+          --amd64 \
+          --target "zabbix-agent2-7.0"
