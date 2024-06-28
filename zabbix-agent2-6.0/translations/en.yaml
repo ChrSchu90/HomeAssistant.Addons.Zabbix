@@ -1,0 +1,36 @@
+---
+configuration:
+  server:
+    name: Server
+    description: >-
+      List of comma delimited IP addresses, optionally in CIDR notation, or DNS names of Zabbix servers and Zabbix proxies. Incoming connections will be accepted only from the hosts listed here.
+  serveractive:
+    name: Server Active
+    description: >-
+      Zabbix server/proxy address or cluster configuration to get active checks from. Multiple Zabbix servers/clusters and Zabbix proxies can be specified, separated by comma.
+  hostname:
+    name: Host Name
+    description: >-
+      List of comma delimited unique, case sensitive hostnames. Required for active checks and must match hostnames as configured on the server.
+  autoupdate:
+    name: Automatic Update
+    description: >-
+      Enable this to update the Zabbix Agent 2 on every addon start.
+  tlspskidentity:
+    name: TLS PSK Identity
+    description: >-
+      Unique, case sensitive string used to identify the pre-shared key.
+  tlspsksecret:
+    name: TLS PSK Secret
+    description: >-
+      The TLS pre-shared key.
+  loglevel:
+    name: Log level
+    description: >-  	
+      Specifies debug level:
+      0 - basic information about starting and stopping of Zabbix processes
+      1 - critical information
+      2 - error information
+      3 - warnings
+      4 - for debugging (produces lots of information)
+      5 - extended debugging (produces even more information)
