@@ -36,7 +36,6 @@ jobs:
       with:
         args: |
           --amd64 \
-          --i386 \
           --test \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --image ha_zabbixagent2-6.0 \
@@ -47,7 +46,6 @@ jobs:
       with:
         args: |
           --amd64 \
-          --i386 \
           --test \
           --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
