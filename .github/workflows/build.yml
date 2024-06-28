@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - '*.md'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: build zabbix-agent2-6.0
+      uses: home-assistant/builder@2024.03.0
+      with:
+        args: |
+          --test \
+          --all \
+          --target zabbix-agent2-6.0
+    
+    - name: build zabbix-agent2-7.0
+      uses: home-assistant/builder@2024.03.0
+      with:
+        args: |
+          --test \
+          --all \
+          --target zabbix-agent2-7.0
