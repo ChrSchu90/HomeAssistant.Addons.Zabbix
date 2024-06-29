@@ -37,7 +37,7 @@ jobs:
         args: |
           --all \
           --test \
-          --no-latest
+          --no-latest \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --target zabbix60-agent2
     
@@ -47,7 +47,7 @@ jobs:
         args: |
           --all \
           --test \
-          --no-latest
+          --no-latest \
           --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --target zabbix70-agent2
