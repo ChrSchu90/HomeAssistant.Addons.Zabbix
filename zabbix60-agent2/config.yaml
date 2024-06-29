@@ -4,11 +4,8 @@ slug: "zabbix60-agent2"
 description: "Zabbix Agent 2 6.0 LTS"
 url: "https://github.com/ChrSchu90/HomeAssistant.Addons.Zabbix/tree/main/zabbix60-agent2"
 arch:
-- armhf
-- armv7
-- aarch64
-- amd64
-- i386
+  - amd64
+  - aarch64
 startup: system
 boot: auto
 full_access: true

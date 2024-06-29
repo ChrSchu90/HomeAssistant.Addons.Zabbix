@@ -29,10 +29,7 @@ RUN apt-get -y update && \
 # Install Zabbix
 RUN echo "zabbix ALL=(root) NOPASSWD: /update.sh" >> /etc/sudoers.d/zabbix && \
     if [[ "${BUILD_ARCH}" = "amd64" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb; fi && \
-    if [[ "${BUILD_ARCH}" = "i386" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb; fi && \
     if [[ "${BUILD_ARCH}" == "aarch64" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
-    if [[ "${BUILD_ARCH}" = "armhf" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
-    if [[ "${BUILD_ARCH}" = "armv7" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
     dpkg -i zabbix_repo.deb && \
     rm -f zabbix_repo.deb && \
     apt-get -y update && \
