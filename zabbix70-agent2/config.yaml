@@ -1,8 +1,8 @@
-name: "zabbix-agent2 6.0 LTS"
+name: "zabbix-agent2 7.0 LTS"
 version: "1.0.0"
-slug: "zabbix-agent2-6.0"
-description: "Zabbix Agent 2 6.0 LTS"
-url: "https://github.com/ChrSchu90/HomeAssistant.Addons.Zabbix/tree/main/zabbix-agent2-6.0"
+slug: "zabbix70-agent2"
+description: "Zabbix Agent 2 7.0 LTS"
+url: "https://github.com/ChrSchu90/HomeAssistant.Addons.Zabbix/tree/main/zabbix70-agent2"
 arch:
 - armhf
 - armv7
