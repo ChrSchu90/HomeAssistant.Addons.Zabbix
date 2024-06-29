@@ -38,7 +38,7 @@ jobs:
           --amd64 \
           --test \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
-          --image chrschu/image-{arch}-zabbix60-agent2 \
+          --image image-{arch}-zabbix60-agent2 \
           --target zabbix60-agent2
     
     - name: build zabbix70-agent2
@@ -48,5 +48,5 @@ jobs:
           --amd64 \
           --test \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
-          --image chrschu/image-{arch}-zabbix60-agent2 \
+          --image image-{arch}-zabbix60-agent2 \
           --target zabbix70-agent2
