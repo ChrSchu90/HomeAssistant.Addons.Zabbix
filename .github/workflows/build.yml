@@ -35,8 +35,9 @@ jobs:
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
-          --all \
           --test \
+          --amd64 \
+          --i386 \
           --no-latest \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --image image-{arch}-zabbix60-agent2 \
@@ -46,8 +47,9 @@ jobs:
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
-          --all \
           --test \
+          --amd64 \
+          --i386 \
           --no-latest \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --image image-{arch}-zabbix60-agent2 \
