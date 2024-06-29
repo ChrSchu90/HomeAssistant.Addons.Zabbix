@@ -37,7 +37,7 @@ jobs:
         args: |
           --amd64 \
           --test \
-          --docker-hub ChrSchu90 \
+          --docker-hub test \
           --target zabbix60-agent2
     
     - name: build zabbix70-agent2
@@ -46,5 +46,5 @@ jobs:
         args: |
           --amd64 \
           --test \
-          --docker-hub ChrSchu90 \
+          --docker-hub test \
           --target zabbix70-agent2
