@@ -48,7 +48,7 @@ jobs:
       with:
         args: |
           --test \
-          --aarch64 \
+          --armv7 \
           --no-latest \
           --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
