@@ -31,26 +31,26 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
-    - name: build zabbix60-agent2
-      uses: home-assistant/builder@2024.03.5
-      with:
-        args: |
-          --test \
-          --amd64 \
-          --i386 \
-          --no-latest \
-          --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
-          --image image-{arch}-zabbix60-agent2 \
-          --target zabbix60-agent2
-    
+    #- name: build zabbix60-agent2
+    #  uses: home-assistant/builder@2024.03.5
+    #  with:
+    #    args: |
+    #      --test \
+    #      --amd64 \
+    #      --i386 \
+    #      --no-latest \
+    #      --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
+    #      --image image-{arch}-zabbix60-agent2 \
+    #      --target zabbix60-agent2
+    #
     - name: build zabbix70-agent2
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
           --test \
-          --amd64 \
-          --i386 \
+          --all \
           --no-latest \
+          --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --image image-{arch}-zabbix60-agent2 \
           --target zabbix70-agent2

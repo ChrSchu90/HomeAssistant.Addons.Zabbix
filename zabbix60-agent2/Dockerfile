@@ -1,18 +1,21 @@
-ARG BUILD_ARCH
 ARG BUILD_VERSION
-ARG BUILD_BASE_IMAGE=ubuntu:22.04
+ARG BUILD_BASE_IMAGE=debian:bookworm
 
 FROM ${BUILD_BASE_IMAGE}
+
+ARG BUILD_ARCH=amd64
 
 LABEL maintainer "ChrSchu <chr.schu@outlook.com>"
 
 ENV LANG C.UTF-8
+ENV TERM=xterm
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add Zabbix users and groups
 RUN groupadd --system --gid 1995 zabbix && \
     useradd --system -g zabbix --uid 1997 zabbix
 
-# Add Homa Assistant docker group and add Zabbix user
+# Add Home Assistant docker group and add Zabbix user
 RUN groupadd --system --gid 1003 docker && \
     usermod -aG docker zabbix
 
@@ -25,7 +28,11 @@ RUN apt-get -y update && \
 
 # Install Zabbix
 RUN echo "zabbix ALL=(root) NOPASSWD: /update.sh" >> /etc/sudoers.d/zabbix && \
-    wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu22.04_all.deb && \
+    if [[ "${BUILD_ARCH}" = "amd64" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb; fi && \
+    if [[ "${BUILD_ARCH}" = "i386" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb; fi && \
+    if [[ "${BUILD_ARCH}" == "aarch64" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
+    if [[ "${BUILD_ARCH}" = "armhf" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
+    if [[ "${BUILD_ARCH}" = "armv7" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
     dpkg -i zabbix_repo.deb && \
     rm -f zabbix_repo.deb && \
     apt-get -y update && \
