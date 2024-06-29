@@ -54,5 +54,5 @@ jobs:
           --no-latest \
           --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
-          --image image-{arch}-zabbix60-agent2 \
+          --image image-{arch}-zabbix70-agent2 \
           --target zabbix70-agent2
