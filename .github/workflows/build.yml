@@ -35,7 +35,7 @@ jobs:
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
-          --all \
+          --amd64 \
           --test \
           --no-latest \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
@@ -45,9 +45,8 @@ jobs:
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
-          --all \
+          --amd64 \
           --test \
           --no-latest \
-          --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
           --target zabbix70-agent2
