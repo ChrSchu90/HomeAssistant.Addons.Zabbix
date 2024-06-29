@@ -35,7 +35,7 @@ jobs:
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
-          --amd64 \
+          --all \
           --test \
           --no-latest
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
@@ -45,7 +45,7 @@ jobs:
       uses: home-assistant/builder@2024.03.5
       with:
         args: |
-          --amd64 \
+          --all \
           --test \
           --no-latest
           --no-cache \
