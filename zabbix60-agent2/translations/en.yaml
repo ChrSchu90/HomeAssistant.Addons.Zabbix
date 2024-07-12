@@ -12,10 +12,6 @@ configuration:
     name: Host Name
     description: >-
       List of comma delimited unique, case sensitive hostnames. Required for active checks and must match hostnames as configured on the server.
-  autoupdate:
-    name: Automatic Update
-    description: >-
-      Enable this to update the Zabbix Agent 2 on every addon start.
   tlspskidentity:
     name: TLS PSK Identity
     description: >-

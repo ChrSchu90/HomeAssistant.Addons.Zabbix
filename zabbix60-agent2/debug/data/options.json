@@ -2,6 +2,5 @@
   "server": "127.0.0.1",
   "serveractive": "",
   "hostname": "HomeAssistant",
-  "autoupdate": true,
   "loglevel": 3
 }

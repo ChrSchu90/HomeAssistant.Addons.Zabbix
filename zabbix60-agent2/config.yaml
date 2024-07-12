@@ -1,11 +1,14 @@
 name: "zabbix-agent2 6.0 LTS"
-version: "1.0.0"
+version: "1.0.1"
 slug: "zabbix60-agent2"
 description: "Zabbix Agent 2 6.0 LTS"
 url: "https://github.com/ChrSchu90/HomeAssistant.Addons.Zabbix/tree/main/zabbix60-agent2"
 arch:
   - amd64
-  - aarch64
+  - i386
+  - aarch64  
+  - armhf
+  - armv7
 startup: system
 boot: auto
 full_access: true
@@ -19,7 +22,6 @@ options:
   server: "127.0.0.1"
   serveractive: ""
   hostname: "HomeAssistant"
-  autoupdate: false
   loglevel: 3
 schema:
   server: str
@@ -27,5 +29,4 @@ schema:
   hostname: str
   tlspskidentity: str?
   tlspsksecret: password?
-  autoupdate: bool
   loglevel: int(0,5)

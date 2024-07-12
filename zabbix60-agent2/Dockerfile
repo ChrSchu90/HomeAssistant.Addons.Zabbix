@@ -4,12 +4,11 @@ ARG BUILD_BASE_IMAGE=debian:bookworm
 FROM ${BUILD_BASE_IMAGE}
 
 ARG BUILD_ARCH=amd64
+ARG DEBIAN_FRONTEND=noninteractive
+ARG ZABBIX_PACKAGE_SOURCE=https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb
+ARG ZABBIX_PACKAGE_SOURCE_ARM=https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb
 
 LABEL maintainer "ChrSchu <chr.schu@outlook.com>"
-
-ENV LANG C.UTF-8
-ENV TERM=xterm
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add Zabbix users and groups
 RUN groupadd --system --gid 1995 zabbix && \
@@ -22,18 +21,22 @@ RUN groupadd --system --gid 1003 docker && \
 # Install base dependencies
 RUN apt-get -y update && \
     apt-get -y upgrade && \
-    apt-get -y install bash jq wget dpkg sudo && \
+    apt-get -y install bash jq wget dpkg && \
     apt-get -y autoremove && \
     apt-get -y clean
 
-# Install Zabbix
-RUN echo "zabbix ALL=(root) NOPASSWD: /update.sh" >> /etc/sudoers.d/zabbix && \
-    if [[ "${BUILD_ARCH}" = "amd64" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb; fi && \
-    if [[ "${BUILD_ARCH}" == "aarch64" ]]; then wget -O zabbix_repo.deb https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb; fi && \
+# Install Zabbix and addons
+RUN if [ "${BUILD_ARCH}" = "amd64" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE}; fi && \
+    if [ "${BUILD_ARCH}" = "i386" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE}; fi && \
+    if [ "${BUILD_ARCH}" = "aarch64" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE_ARM}; fi && \
+    if [ "${BUILD_ARCH}" = "armhf" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE_ARM}; fi && \
+    if [ "${BUILD_ARCH}" = "armv7" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE_ARM}; fi && \
     dpkg -i zabbix_repo.deb && \
     rm -f zabbix_repo.deb && \
     apt-get -y update && \
-    apt-get -y install zabbix-agent2 zabbix-agent2-plugin-postgresql zabbix-agent2-plugin-mongodb
+    apt-get -y install zabbix-agent2 && \
+    if [ "${BUILD_ARCH}" = "amd64" ]; then apt-get -y install zabbix-agent2-plugin-*; fi && \
+    if [ "${BUILD_ARCH}" = "aarch64" ]; then apt-get -y install zabbix-agent2-plugin-*; fi
 
 # Create Zabbix folders and configure rights
 RUN mkdir -p /etc/zabbix/zabbix_agentd.d && \
@@ -46,14 +49,12 @@ RUN mkdir -p /etc/zabbix/zabbix_agentd.d && \
     chgrp -R 0 /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/ && \
     chmod -R g=u /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/
 
-# Add run and update script to update the configuration and start the zabbix-agent
+# Add run script
 COPY run.sh /
-COPY update.sh /
 RUN chown zabbix:zabbix /run.sh && \ 
-    chmod a+x /run.sh && \ 
-    chown zabbix:zabbix /update.sh && \ 
-    chmod a+x /update.sh
+    chmod a+x /run.sh
 
+# Expose Zabbix Agent TCP Port
 EXPOSE 10050/TCP
 
 WORKDIR /var/lib/zabbix

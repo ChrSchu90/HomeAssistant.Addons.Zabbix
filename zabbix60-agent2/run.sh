@@ -9,16 +9,7 @@ ZABBIX_SERVER_ACTIVE=$(jq --raw-output ".serveractive" "${CONFIG_PATH}")
 ZABBIX_HOSTNAME=$(jq --raw-output ".hostname" "${CONFIG_PATH}")
 ZABBIX_TLSPSK_IDENTITY=$(jq --raw-output ".tlspskidentity" "${CONFIG_PATH}")
 ZABBIX_TLSPSK_SECRET=$(jq --raw-output ".tlspsksecret" "${CONFIG_PATH}")
-AUTO_UPDATE=$(jq --raw-output ".autoupdate" "$CONFIG_PATH")
 LOG_LEVEL=$(jq --raw-output ".loglevel" "$CONFIG_PATH")
-
-# Update zabbix agent if configured
-if [[ "${AUTO_UPDATE}" == "true" ]]; then
-  echo "Check for updates..."
-	sudo /update.sh
-else
-  echo "Skip update"
-fi
 
 # Update zabbix-agent config
 ZABBIX_CONFIG_FILE=/etc/zabbix/zabbix_agent2.conf
