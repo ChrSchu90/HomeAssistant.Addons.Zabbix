@@ -48,7 +48,7 @@ RUN mkdir -p /etc/zabbix/zabbix_agentd.d && \
 
 # Add run script
 COPY run.sh /run.sh
-RUN chown zabbix:zabbix /run.sh && \
+RUN chown zabbix:zabbix /run.sh && \ 
     chmod a+x /run.sh
 
 # Expose Zabbix Agent TCP Port
