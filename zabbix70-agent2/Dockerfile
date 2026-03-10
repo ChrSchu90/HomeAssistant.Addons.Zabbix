@@ -1,6 +1,7 @@
 FROM debian:trixie-slim
 
 ARG BUILD_ARCH=amd64
+ARG DEBIAN_FRONTEND=noninteractive
 ARG ZABBIX_PACKAGE_SOURCE=https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.0+debian13_all.deb
 ARG ZABBIX_PACKAGE_SOURCE_ARM=https://repo.zabbix.com/zabbix/7.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_latest_7.0+debian13_all.deb
 
@@ -46,14 +47,12 @@ RUN mkdir -p /etc/zabbix/zabbix_agentd.d && \
     chmod -R g=u /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/
 
 # Add run script
-COPY run.sh /
-RUN chown zabbix:zabbix /run.sh && \ 
+COPY run.sh /run.sh
+RUN chown zabbix:zabbix /run.sh && \
     chmod a+x /run.sh
 
 # Expose Zabbix Agent TCP Port
 EXPOSE 10050/tcp
-
-VOLUME ["/data"]
 
 WORKDIR /var/lib/zabbix
 CMD [ "/run.sh" ]
