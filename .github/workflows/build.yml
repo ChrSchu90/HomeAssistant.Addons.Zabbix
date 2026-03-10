@@ -41,9 +41,8 @@ jobs:
           --aarch64 \
           --no-latest \
           --no-cache \
-          --image image-{arch}-zabbix60-agent2 \
+          --image zabbix60-agent2-{arch} \
           --target zabbix60-agent2
-          --build-arg BUILD_FROM=ghcr.io/home-assistant/{arch}-base-debian:trixie
     
     - name: build zabbix70-agent2
       uses: home-assistant/builder@2026.02.1
@@ -54,6 +53,5 @@ jobs:
           --aarch64 \
           --no-latest \
           --no-cache \
-          --image image-{arch}-zabbix70-agent2 \
+          --image zabbix70-agent2-{arch} \
           --target zabbix70-agent2
-          --build-arg BUILD_FROM=ghcr.io/home-assistant/{arch}-base-debian:trixie
