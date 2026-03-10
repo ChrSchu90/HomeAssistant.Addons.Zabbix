@@ -5,10 +5,7 @@ description: "Zabbix Agent 2 7.0 LTS"
 url: "https://github.com/ChrSchu90/HomeAssistant.Addons.Zabbix/tree/main/zabbix70-agent2"
 arch:
   - amd64
-  - i386
-  - aarch64  
-  - armhf
-  - armv7
+  - aarch64
 startup: system
 boot: auto
 full_access: true

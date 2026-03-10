@@ -38,9 +38,6 @@ jobs:
           --test \
           --amd64 \
           --aarch64 \
-          --i386 \
-          --armhf \
-          --armv7 \
           --no-latest \
           --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
@@ -54,9 +51,6 @@ jobs:
           --test \
           --amd64 \
           --aarch64 \
-          --i386 \
-          --armhf \
-          --armv7 \
           --no-latest \
           --no-cache \
           --docker-hub ${{ secrets.DOCKERHUB_USERNAME }} \
