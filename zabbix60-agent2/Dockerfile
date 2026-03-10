@@ -1,5 +1,5 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-debian:trixie
-FROM $BUILD_FROM
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
 ARG BUILD_ARCH=amd64
 ARG ZABBIX_PACKAGE_SOURCE=https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb
