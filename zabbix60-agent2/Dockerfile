@@ -2,8 +2,8 @@ ARG BUILD_ARCH=amd64
 FROM ghcr.io/home-assistant/${BUILD_ARCH}-base-debian:trixie
 
 ARG BUILD_ARCH=amd64
-ARG ZABBIX_PACKAGE_SOURCE=https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_6.0-5+debian12_all.deb
-ARG ZABBIX_PACKAGE_SOURCE_ARM=https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_6.0-6+debian12_all.deb
+ARG ZABBIX_PACKAGE_SOURCE=https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_latest_6.0+debian13_all.deb
+ARG ZABBIX_PACKAGE_SOURCE_ARM=https://repo.zabbix.com/zabbix/6.0/debian-arm64/pool/main/z/zabbix-release/zabbix-release_latest_6.0+debian13_all.deb
 
 LABEL maintainer="ChrSchu <chr.schu@outlook.com>"
 
