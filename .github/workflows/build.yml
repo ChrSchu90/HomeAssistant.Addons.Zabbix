@@ -41,6 +41,8 @@ jobs:
           --aarch64 \
           --no-latest \
           --no-cache \
+          --docker-hub ghcr.io/${{ github.repository_owner }} \
+          --image image-{arch}-zabbix60-agent2 \
           --target zabbix60-agent2
     
     - name: build zabbix70-agent2
@@ -52,4 +54,6 @@ jobs:
           --aarch64 \
           --no-latest \
           --no-cache \
+          --docker-hub ghcr.io/${{ github.repository_owner }} \
+          --image image-{arch}-zabbix60-agent2 \
           --target zabbix70-agent2
