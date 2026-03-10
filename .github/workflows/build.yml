@@ -41,7 +41,6 @@ jobs:
           --aarch64 \
           --no-latest \
           --no-cache \
-          --image ghcr.io/chrschu90/zabbix60-agent2-{arch} \
           --target zabbix60-agent2
     
     - name: build zabbix70-agent2
@@ -53,5 +52,4 @@ jobs:
           --aarch64 \
           --no-latest \
           --no-cache \
-          --image ghcr.io/chrschu90/zabbix70-agent2-{arch} \
           --target zabbix70-agent2
