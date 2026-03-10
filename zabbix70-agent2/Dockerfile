@@ -22,7 +22,7 @@ RUN apt-get -y update && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 # Install Zabbix and addons
-RUN apt-get -y update && apt-get -y install wget ca-certificates && \
+RUN apt-get -y update && apt-get -y install wget && \
     if [ "${BUILD_ARCH}" = "amd64" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE}; fi && \
     if [ "${BUILD_ARCH}" = "aarch64" ]; then wget -O zabbix_repo.deb ${ZABBIX_PACKAGE_SOURCE_ARM}; fi && \
     dpkg -i zabbix_repo.deb && \
