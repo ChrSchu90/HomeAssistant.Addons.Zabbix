@@ -1,5 +1,4 @@
-ARG BUILD_ARCH=amd64
-FROM ghcr.io/home-assistant/${BUILD_ARCH}-base-debian:trixie
+FROM debian:trixie-slim
 
 ARG BUILD_ARCH=amd64
 ARG ZABBIX_PACKAGE_SOURCE=https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.0+debian13_all.deb
@@ -44,15 +43,17 @@ RUN mkdir -p /etc/zabbix/zabbix_agentd.d && \
     mkdir -p /usr/sbin/zabbix-agent2-plugin && \
     chown --quiet -R zabbix:zabbix /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/ && \
     chgrp -R 0 /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/ && \
-    chmod -R g=u /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/ && \
-    mkdir -p /etc/services.d/zabbix-agent2
-
-WORKDIR /var/lib/zabbix
+    chmod -R g=u /etc/zabbix/ /var/lib/zabbix/ /usr/sbin/zabbix-agent2-plugin/ /run/zabbix/
 
 # Add run script
-COPY run.sh /etc/services.d/zabbix-agent2/run
-RUN chown zabbix:zabbix /etc/services.d/zabbix-agent2/run && \ 
-    chmod a+x /etc/services.d/zabbix-agent2/run
+COPY run.sh /
+RUN chown zabbix:zabbix /run.sh && \ 
+    chmod a+x /run.sh
 
 # Expose Zabbix Agent TCP Port
 EXPOSE 10050/tcp
+
+VOLUME ["/data"]
+
+WORKDIR /var/lib/zabbix
+CMD [ "/run.sh" ]
