@@ -6,9 +6,6 @@ url: "https://github.com/ChrSchu90/HomeAssistant.Addons.Zabbix/tree/main/zabbix7
 arch:
   - amd64
   - aarch64
-build_from:
-  amd64: ghcr.io/home-assistant/amd64-base-debian:trixie
-  aarch64: ghcr.io/home-assistant/aarch64-base-debian:trixie
 startup: system
 boot: auto
 full_access: true
