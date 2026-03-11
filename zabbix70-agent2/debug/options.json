@@ -1,0 +1,8 @@
+{
+  "server": "127.0.0.1",
+  "serveractive": "",
+  "hostname": "Home Assistant",
+  "loglevel": 3,
+  "tlspskidentity": "",
+  "tlspsksecret": ""
+}
