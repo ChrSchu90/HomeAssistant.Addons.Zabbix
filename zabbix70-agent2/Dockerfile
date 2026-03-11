@@ -33,6 +33,7 @@ RUN apt-get -y update && apt-get -y install wget && \
     apt-get -y purge wget && \
     apt-get -y autoremove && \
     apt-get -y clean && \
+    sed -i '/^[[:space:]]*#/d;/^[[:space:]]*$/d' /etc/zabbix/zabbix_agent2.conf && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 # Create Zabbix folders and configure rights and service dir

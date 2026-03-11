@@ -1,36 +1,47 @@
 #!/bin/bash
 set -euo pipefail
 
-# Extract config data (missing -> empty)
-CONFIG_PATH=/data/options.json
-ZABBIX_SERVER=$(jq -r '.server // empty' "${CONFIG_PATH}")
-ZABBIX_SERVER_ACTIVE=$(jq -r '.serveractive // empty' "${CONFIG_PATH}")
-ZABBIX_HOSTNAME=$(jq -r '.hostname // empty' "${CONFIG_PATH}")
-ZABBIX_TLSPSK_IDENTITY=$(jq -r '.tlspskidentity // empty' "${CONFIG_PATH}")
-ZABBIX_TLSPSK_SECRET=$(jq -r '.tlspsksecret // empty' "${CONFIG_PATH}")
-LOG_LEVEL=$(jq -r '.loglevel // empty' "${CONFIG_PATH}")
-
-# helper: escape replacement for sed (escapes @ and & and backslashes)
-escape_sed_replacement() {
-  printf '%s' "$1" | sed -e 's/[\/&@\\]/\\&/g'
+# Update-or-append helper (handles existing commented or uncommented keys too)
+set_ini_kv() {
+  local file="$1" key="$2" value="$3"
+  if grep -qE "^[[:space:]]*#?[[:space:]]*${key}=" "$file"; then
+    sed -i -E "s|^[[:space:]]*#?[[:space:]]*(${key})=.*|\1=${value}|" "$file"
+  else
+    printf '%s=%s\n' "$key" "$value" >> "$file"
+  fi
 }
 
-# Update zabbix-agent config
-ZABBIX_CONFIG_FILE=/etc/zabbix/zabbix_agent2.conf
-echo "DebugLevel=${LOG_LEVEL}" >> "${ZABBIX_CONFIG_FILE}"
-echo "LogType=console" >> "${ZABBIX_CONFIG_FILE}"
-sed -i "s@^\(Server\)=.*@\1=$(escape_sed_replacement "${ZABBIX_SERVER}")@" "${ZABBIX_CONFIG_FILE}"
-sed -i "s@^\(ServerActive\)=.*@\1=$(escape_sed_replacement "${ZABBIX_SERVER_ACTIVE}")@" "${ZABBIX_CONFIG_FILE}"
-sed -i "s@^#\?\s\?\(Hostname\)=.*@\1=$(escape_sed_replacement "${ZABBIX_HOSTNAME}")@" "${ZABBIX_CONFIG_FILE}"
+# Remove ini key and value
+remove_ini_key() {
+  local file="$1" key="$2"
+  sed -i -E "/^[[:space:]]*#?[[:space:]]*${key}=/d" "$file"
+}
 
-# Only enable PSK if both identity AND secret are non-empty
+# Update required zabbix-agent config
+ADDON_CONFIG_FILE=/data/options.json
+ZABBIX_CONFIG_FILE=/etc/zabbix/zabbix_agent2.conf
+set_ini_kv "$ZABBIX_CONFIG_FILE" "Server"       "$(jq -r '.server // empty' "${ADDON_CONFIG_FILE}")"
+set_ini_kv "$ZABBIX_CONFIG_FILE" "ServerActive" "$(jq -r '.serveractive // empty' "${ADDON_CONFIG_FILE}")"
+set_ini_kv "$ZABBIX_CONFIG_FILE" "Hostname"     "$(jq -r '.hostname // empty' "${ADDON_CONFIG_FILE}")"
+set_ini_kv "$ZABBIX_CONFIG_FILE" "DebugLevel"   "$(jq -r '.loglevel // empty' "${ADDON_CONFIG_FILE}")"
+set_ini_kv "$ZABBIX_CONFIG_FILE" "LogType"      "console"
+
+# Enable PSK if both identity AND secret are non-empty
+ZABBIX_TLSPSK_IDENTITY=$(jq -r '.tlspskidentity // empty' "${ADDON_CONFIG_FILE}")
+ZABBIX_TLSPSK_SECRET=$(jq -r '.tlspsksecret // empty' "${ADDON_CONFIG_FILE}")
 if [ -n "${ZABBIX_TLSPSK_IDENTITY}" ] && [ -n "${ZABBIX_TLSPSK_SECRET}" ]; then
   ZABBIX_TLSPSK_SECRET_FILE=/etc/zabbix/tls_secret
   printf '%s' "${ZABBIX_TLSPSK_SECRET}" > "${ZABBIX_TLSPSK_SECRET_FILE}"
-  sed -i "s@^#\?\s\?\(TLSConnect\)=.*@\1=psk@" "${ZABBIX_CONFIG_FILE}"
-  sed -i "s@^#\?\s\?\(TLSAccept\)=.*@\1=psk@" "${ZABBIX_CONFIG_FILE}"
-  sed -i "s@^#\?\s\?\(TLSPSKIdentity\)=.*@\1=$(escape_sed_replacement "${ZABBIX_TLSPSK_IDENTITY}")@" "${ZABBIX_CONFIG_FILE}"
-  sed -i "s@^#\?\s\?\(TLSPSKFile\)=.*@\1=$(escape_sed_replacement "${ZABBIX_TLSPSK_SECRET_FILE}")@" "${ZABBIX_CONFIG_FILE}"
+  set_ini_kv "$ZABBIX_CONFIG_FILE" "TLSConnect"     "psk"
+  set_ini_kv "$ZABBIX_CONFIG_FILE" "TLSAccept"      "psk"
+  set_ini_kv "$ZABBIX_CONFIG_FILE" "TLSPSKIdentity" "${ZABBIX_TLSPSK_IDENTITY}"
+  set_ini_kv "$ZABBIX_CONFIG_FILE" "TLSPSKFile"     "${ZABBIX_TLSPSK_SECRET_FILE}"
+else
+  # Remove TLS config completely if not configured
+  remove_ini_key "$ZABBIX_CONFIG_FILE" "TLSConnect"
+  remove_ini_key "$ZABBIX_CONFIG_FILE" "TLSAccept"
+  remove_ini_key "$ZABBIX_CONFIG_FILE" "TLSPSKIdentity"
+  remove_ini_key "$ZABBIX_CONFIG_FILE" "TLSPSKFile"
 fi
 
 # unset secrets from env
