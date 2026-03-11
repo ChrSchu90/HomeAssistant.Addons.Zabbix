@@ -21,4 +21,5 @@ Follow these steps to get the add-on installed on your system:
 `Major` updates are separated into different addons, you need to stop the old addon to run the new major version.
 
 `Minor` updates can be applied by rebuilding the addon.
-![](../Documentation/Screenshots/Rebuild.jpg)
+
+<img height="450" src="https://github.com/user-attachments/assets/964ca028-1a4a-4a54-9509-09c6e2a98514" />
