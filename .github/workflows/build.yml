@@ -40,8 +40,8 @@ jobs:
     - name: HA Container Build
       uses: home-assistant/builder/actions/build-image@2026.03.2
       with:
-        arch: ${{ matrix.arch }}
-        image: ghcr.io/chrschu/ha-${{ matrix.addon }}-${{ matrix.arch }}
+        arch: ${{ matrix.target.arch }}
+        image: ghcr.io/chrschu/ha-${{ matrix.addon }}-${{ matrix.target.arch }}
         context: ./${{ matrix.addon }}
         image-tags: ci
         push: false
