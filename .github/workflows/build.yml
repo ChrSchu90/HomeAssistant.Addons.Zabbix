@@ -31,7 +31,6 @@ jobs:
     runs-on: ${{ matrix.target.os }}
     permissions:
       contents: read
-      id-token: read
       packages: read
     steps:
     - name: Checkout
