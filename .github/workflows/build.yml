@@ -30,9 +30,9 @@ jobs:
             os: ubuntu-24.04-arm
     runs-on: ${{ matrix.target.os }}
     permissions:
-      contents: write
-      id-token: write
-      packages: write
+      contents: read
+      id-token: read
+      packages: read
     steps:
     - name: Checkout
       uses: actions/checkout@v6
