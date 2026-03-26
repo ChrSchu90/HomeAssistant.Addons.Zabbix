@@ -37,7 +37,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v6
     
-    - name: HA Container Build
+    - name: Container Test Build
       uses: home-assistant/builder/actions/build-image@2026.03.2
       with:
         arch: ${{ matrix.target.arch }}
